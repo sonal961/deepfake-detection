@@ -13,27 +13,24 @@ def home():
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    print("PREDICT FUNCTION CALLED")
+    try:
+        if 'file' not in request.files:
+            return "No file uploaded"
 
-    if 'file' not in request.files:
-        print("No file uploaded")
-        return "No file uploaded"
+        file = request.files['file']
 
-    file = request.files['file']
+        if file.filename == "":
+            return "No file selected"
 
-    if file.filename == "":
-        print("No file selected")
-        return render_template("index.html", prediction="No file selected")
+        path = os.path.join("static", file.filename)
+        file.save(path)
 
-    path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-    file.save(path)
+        result = predict_image(path)
 
-    print("File saved at:", path)
+        return render_template("index.html", prediction=result)
 
-    result = predict_image(path)
-    print("Prediction:", result)
-
-    return render_template("index.html", prediction=result)
+    except Exception as e:
+        return f"Error: {str(e)}"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000, debug=True)
