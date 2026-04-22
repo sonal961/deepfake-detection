@@ -11,7 +11,6 @@ def predict_image(image_path):
 
     prediction = model.predict(img)
 
-    print("Raw prediction:", prediction)
 
     if prediction[0][0] > 0.5:
         return "Fake Image"
