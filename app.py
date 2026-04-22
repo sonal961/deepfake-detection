@@ -25,7 +25,7 @@ def predict():
         path = os.path.join("static", file.filename)
         file.save(path)
 
-        result = "Working!"
+        result = predict_image(path)
 
         return render_template("index.html", prediction=result)
 
