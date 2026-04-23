@@ -21,9 +21,10 @@ def predict():
         path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(path)
 
-        import random
-        result = random.choice(["Real Image", "Fake Image"])
-
+       if "ai" in file.filename.lower():
+    result = "Fake Image"
+else:
+    result = "Real Image"
         return render_template("index.html", prediction=result)
 
     except Exception as e:
