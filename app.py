@@ -22,10 +22,10 @@ def predict():
         file.save(path)
 
        if "ai" in file.filename.lower():
-    result = "Fake Image"
-else:
-    result = "Real Image"
-        return render_template("index.html", prediction=result)
+          result = "Fake Image"
+      else:
+          result = "Real Image"
+      return render_template("index.html", prediction=result)
 
     except Exception as e:
         return f"Error: {str(e)}"
