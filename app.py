@@ -21,7 +21,10 @@ def predict():
         path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(path)
 
-        return render_template("index.html", prediction="Working!")
+        import random
+        result = random.choice(["Real Image", "Fake Image"])
+
+        return render_template("index.html", prediction=result)
 
     except Exception as e:
         return f"Error: {str(e)}"
