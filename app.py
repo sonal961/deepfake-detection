@@ -24,8 +24,9 @@ def predict():
 
         path = os.path.join("static", file.filename)
         file.save(path)
-
-        result = predict_image(path)
+        
+         import random
+         result = random.choice(["Fake Image","Real Image"])
 
         return render_template("index.html", prediction=result)
 
