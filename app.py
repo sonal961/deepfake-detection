@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request
 import os
-from detect import predict_image
 
 app = Flask(__name__)
 
@@ -14,27 +13,20 @@ def home():
 @app.route("/predict", methods=["POST"])
 def predict():
     try:
-        if 'file' not in request.files:
-            return "No file uploaded"
-
         file = request.files['file']
 
         if file.filename == "":
             return "No file selected"
 
-        path = os.path.join("static", file.filename)
+        path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(path)
-        
-         import random
-         result = random.choice(["Fake Image","Real Image"])
 
-        return render_template("index.html", prediction=result)
+        return render_template("index.html", prediction="Working!")
 
     except Exception as e:
         return f"Error: {str(e)}"
 
 import os
-
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port, debug=True)
+    app.run(host="0.0.0.0", port=port)
