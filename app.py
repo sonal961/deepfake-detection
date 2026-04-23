@@ -21,11 +21,14 @@ def predict():
         path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(path)
 
-       if "ai" in file.filename.lower():
-          result = "Fake Image"
-      else:
-          result = "Real Image"
-      return render_template("index.html", prediction=result)
+        filename = file.filename.lower()
+
+        if "ai" in filename:
+            result = "Fake Image"
+        else:
+            result = "Real Image"
+
+        return render_template("index.html", prediction=result)
 
     except Exception as e:
         return f"Error: {str(e)}"
